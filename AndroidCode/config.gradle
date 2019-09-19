@@ -1,0 +1,31 @@
+ext {
+
+    android = [
+            compileSdkVersion       : 28,
+            minSdkVersion           : 16,
+            targetSdkVersion        : 28,
+            versionCode             : 1,
+            versionName             : "1.0"
+    ]
+
+    version = [
+            appcompat               :"1.1.0",
+            constraintLayout        :"1.1.3",
+            testrunner              :"1.1.1",
+            espressocore            :"3.1.1",
+            junit                   :"4.12",
+    ]
+
+    dependencies = [
+
+            "appcompat"                              : "androidx.appcompat:appcompat:${version["appcompat"]}",
+            "constraintLayout"                       : "androidx.constraintlayout:constraintlayout:${version["constraintLayout"]}",
+
+            "junit"                                  : "junit:junit:${version["junit"]}",
+            "espressocore"                           : "androidx.test.espresso:espresso-core:${version["espressocore"]}",
+            "testrunner"                             : "androidx.test:runner:${version["testrunner"]}",
+
+    ]
+
+}
+

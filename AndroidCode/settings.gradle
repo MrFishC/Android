@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':module01', ':module01_sqlite'
 rootProject.name='AndroidCode'

@@ -3,7 +3,7 @@ apply from: "../common.build.gradle"
 android {
 
     defaultConfig {
-        applicationId "cn.jack"
+        applicationId "cn.jack.module01_sqlite"
     }
 
 }
