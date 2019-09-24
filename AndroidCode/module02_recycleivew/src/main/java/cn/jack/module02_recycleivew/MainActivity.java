@@ -1,9 +1,5 @@
 package cn.jack.module02_recycleivew;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jack.module02_recycleivew.cardlist.CardBean;
 import cn.jack.module02_recycleivew.cardlist.CardConfig;
 import cn.jack.module02_recycleivew.cardlist.CardItemTouchHelperCallback;
 import cn.jack.module02_recycleivew.cardlist.CardLayoutManager;
@@ -21,8 +25,20 @@ import cn.jack.module02_recycleivew.cardlist.OnSwipeListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Integer> list = new ArrayList<>();
+    private List<CardBean> list = new ArrayList<>();
+
+    //被移除出去的数据
+    private List<CardBean> mPreCardBean = new ArrayList<>();
+
     private MyAdapter mMyAdapter;
+
+    int count = 1;
+
+    //标记,模拟分页加载使用
+    private int mPageLoad = 0;
+
+    //每一页加载出来的数据
+    private int mPageNum = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mMyAdapter = new MyAdapter(list);
 
         recyclerView.setAdapter(mMyAdapter);
-        CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback<Integer>(mMyAdapter, list, new OnSwipeListener<Integer>() {
+        CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback<CardBean>(mMyAdapter, list, new OnSwipeListener<CardBean>() {
             @Override
             public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
                 MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
@@ -57,11 +73,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, Integer integer, int direction) {
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, CardBean cardBean, int direction) {
                 MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
                 viewHolder.itemView.setAlpha(1f);
                 myHolder.dislikeImageView.setAlpha(0f);
                 myHolder.likeImageView.setAlpha(0f);
+
+                updateItemData(cardBean,direction);
             }
 
             @Override
@@ -70,24 +88,15 @@ public class MainActivity extends AppCompatActivity {
                 //是否选择循环加载
                 Toast.makeText(MainActivity.this, "data clear", Toast.LENGTH_SHORT).show();
 
-                recyclerView.post(new Runnable() {
+                recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mPageLoad = 0;
                         initData();
                         mMyAdapter.notifyDataSetChanged();
                     }
-                });
+                },500);
 
-
-
-//                recyclerView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        initData();
-//                        mMyAdapter.notifyDataSetChanged();
-//                    }
-//                }, 3000L);
             }
 
         });
@@ -108,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         case 1:
                             //加载第二页数据
                             for (int i = 0; i < mPageNum; i++) {
-                                list.add(R.drawable.img_avatar_02);
+                                list.add(new CardBean("雅婷"+i,20+i+"","天蝎座",R.drawable.img_avatar_02));
                             }
                             mPageLoad++;
                             break;
@@ -144,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         case 2:
                             //加载第七页数据
                             for (int i = 0; i < mPageNum/2; i++) {
-                                list.add(R.drawable.img_avatar_07);
+                                list.add(new CardBean("诗婷"+i,18+i+"","处女座",R.drawable.img_avatar_07));
                             }
                             mPageLoad++;
                             break;
@@ -165,13 +174,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    int count = 1;
+    /**
+     * 上下滑动更新列表数据
+     * @param cardBean
+     * @param direction
+     */
+    private void updateItemData(CardBean cardBean, int direction) {
+        if(direction == ItemTouchHelper.UP){
+            CardBean bean = list.get(0);
+            mPreCardBean.add(bean);
+            list.remove(bean);
+            mMyAdapter.notifyDataSetChanged();
+        }else {
+            if(mPreCardBean.size() != 0){
+                //更改逻辑
+                CardBean cardB = mPreCardBean.get(mPreCardBean.size() - 1);
+                list.add(0,cardB);
+                mPreCardBean.remove(cardB);
+                mMyAdapter.notifyDataSetChanged();
+            }
+        }
 
-    //标记,模拟分页加载使用
-    private int mPageLoad = 0;
+        //mPreCardBean
 
-    //每一页加载出来的数据
-    private int mPageNum = 4;
+    }
+
+
 
     private void initData() {
 
@@ -179,9 +207,14 @@ public class MainActivity extends AppCompatActivity {
             list.clear();
         }
 
+        if (mPreCardBean.size() != 0) {
+            mPreCardBean.clear();
+        }
+
+
         //第一次加载,默认加载10条数据
         for (int i = 0; i < mPageNum; i++) {
-            list.add(R.drawable.img_avatar_01);
+            list.add(new CardBean("凯婷"+i,16+i+"","双秤座",R.drawable.img_avatar_01));
         }
 
         //首页加载出来的数据小于pageNum的情况下,控制pageLoad标记
@@ -193,10 +226,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-        private List<Integer> mIntegers;
+        private List<CardBean> mCardBeans;
 
-        public MyAdapter(List<Integer> integers) {
-            mIntegers = integers;
+        public MyAdapter(List<CardBean> CardBeans) {
+            mCardBeans = CardBeans;
         }
 
         @Override
@@ -209,13 +242,17 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
             ImageView avatarImageView = ((MyViewHolder) holder).avatarImageView;
 
-            final Integer integer =  mIntegers.get(position);
-            avatarImageView.setImageResource(mIntegers.get(position));
+            final CardBean cardBean =  mCardBeans.get(position);
+            avatarImageView.setImageResource(cardBean.getIcon());
 
-            holder.textView.setOnClickListener(new View.OnClickListener() {
+            holder.name.setText(cardBean.getName());
+            holder.age.setText(cardBean.getAge());
+            holder.constellation.setText(cardBean.getConstellation());
+
+            holder.constellation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this," " + integer,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this," " + cardBean.getName(),Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -223,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return mIntegers.size();
+            return mCardBeans.size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
@@ -231,14 +268,18 @@ public class MainActivity extends AppCompatActivity {
             ImageView avatarImageView;
             ImageView likeImageView;
             ImageView dislikeImageView;
-            TextView textView;
+            TextView constellation;
+            TextView age;
+            TextView name;
 
             MyViewHolder(View itemView) {
                 super(itemView);
                 avatarImageView = (ImageView) itemView.findViewById(R.id.iv_avatar);
                 likeImageView = (ImageView) itemView.findViewById(R.id.iv_like);
                 dislikeImageView = (ImageView) itemView.findViewById(R.id.iv_dislike);
-                textView = (TextView) itemView.findViewById(R.id.tv_constellation);
+                constellation = (TextView) itemView.findViewById(R.id.tv_constellation);
+                age = (TextView) itemView.findViewById(R.id.tv_age);
+                name = (TextView) itemView.findViewById(R.id.tv_name);
             }
 
         }

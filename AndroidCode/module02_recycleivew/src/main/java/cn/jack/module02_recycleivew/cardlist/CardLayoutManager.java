@@ -115,12 +115,12 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
                     // CardConfig.DEFAULT_SCALE 默认为0.1f，CardConfig.DEFAULT_TRANSLATE_Y 默认为14
                     view.setScaleX(1 - (position - 1) * CardConfig.DEFAULT_SCALE);
                     view.setScaleY(1 - (position - 1) * CardConfig.DEFAULT_SCALE);
-//                    view.setTranslationY((position - 1) * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);     //从下往上层叠
+                    //                    view.setTranslationY((position - 1) * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);     //从下往上层叠
                     view.setTranslationY(-(position - 1) * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);      //从上往下层叠
                 }else if (position > 0) {
                     view.setScaleX(1 - position * CardConfig.DEFAULT_SCALE);
                     view.setScaleY(1 - position * CardConfig.DEFAULT_SCALE);
-//                    view.setTranslationY(position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);    //从下往上层叠
+                    //                    view.setTranslationY(position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);    //从下往上层叠
                     view.setTranslationY(- position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);    //从上往下层叠
                 }else {
                     // 设置 mTouchListener 的意义就在于我们想让处于顶层的卡片是可以随意滑动的
@@ -155,7 +155,7 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
                 if (position > 0) {
                     view.setScaleX(1 - position * CardConfig.DEFAULT_SCALE);
                     view.setScaleY(1 - position * CardConfig.DEFAULT_SCALE);
-//                    view.setTranslationY(position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);       //从下往上层叠
+                    //                    view.setTranslationY(position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);       //从下往上层叠
                     view.setTranslationY(-position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);        //从上往下层叠
                 }else {
                     view.setOnTouchListener(mOnTouchListener);
