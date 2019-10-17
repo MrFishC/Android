@@ -1,6 +1,7 @@
 package cn.jack.module02_recycleivew.cardlist;
 
 import android.graphics.Canvas;
+import android.util.TypedValue;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author Jack
  * @time 19-9-23 上午10:30
- * @describe todo 上滑下滑还存在bug
+ * @describe
  */
 public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
 
@@ -34,19 +35,6 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
 
-        //        System.out.println("getMovementFlags");
-        //        System.out.println("getItemCount " + recyclerView.getAdapter().getItemCount());
-
-        //        if (recyclerView.getAdapter() != null) {
-
-        //item数量
-        //int childCount = recyclerView.getAdapter().getItemCount();
-
-        //item数量为1的情况下,不设置滑动效果                      更改为循环加载
-        //            if(childCount  == 1){
-        //                return 0;
-        //            }
-
         //1.对于 swipeFlags 只关心上下两个方向：
 
         int dragFlags = 0;
@@ -54,13 +42,10 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
 
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         if (layoutManager instanceof CardLayoutManager) {
-            //            swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-
             //设置item滑动的方向
-            swipeFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            swipeFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
             return makeMovementFlags(dragFlags, swipeFlags);
         }
-        //        }
 
         return 0;
     }
@@ -80,16 +65,14 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
         //4.1.删除相对应的数据
         int layoutPosition = viewHolder.getLayoutPosition();
 
-        System.out.println("layoutPosition " + layoutPosition);
+        T remove = dataList.remove(layoutPosition);
 
-        T itemBean = dataList.get(layoutPosition);
-//        T itemBean = dataList.remove(layoutPosition);
-//        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 
         //4.2.卡片滑出后回调 OnSwipeListener 监听器
         if (mListener != null) {
             //            mListener.onSwiped(viewHolder, remove, direction == ItemTouchHelper.LEFT ? CardConfig.SWIPED_LEFT : CardConfig.SWIPED_RIGHT);
-            mListener.onSwiped(viewHolder, itemBean, direction == ItemTouchHelper.UP ? CardConfig.SWIPED_UP : CardConfig.SWIPED_DOWN);
+            mListener.onSwiped(viewHolder,remove,direction);
 
             //4.3.当没有数据时回调 OnSwipeListener 监听器
             if (adapter.getItemCount() == 0) {
@@ -109,11 +92,18 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
+        double swipValue = Math.sqrt(dX * dX + dY * dY);
+        float ratio =(float) swipValue / getThreshold(recyclerView, viewHolder);
+
         View itemView = viewHolder.itemView;
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+
             // 得到滑动的阀值
+
             //            float ratio = dX / getThreshold(recyclerView, viewHolder);
-            float ratio = dY / getThreshold(recyclerView, viewHolder);
+//            float ratio = dY / getThreshold(recyclerView, viewHolder);
+
+            System.out.println("ratio111 " + ratio);
 
             // ratio 最大为 1 或 -1
             if (ratio > 1) {
@@ -126,12 +116,8 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
             //            itemView.setRotation(ratio * CardConfig.DEFAULT_ROTATE_DEGREE);
             int childCount = recyclerView.getChildCount();
 
-            System.out.println("数据源" + childCount);
-
             // 当数据源个数大于最大显示数时
             if (childCount > CardConfig.DEFAULT_SHOW_ITEM) {
-
-                System.out.println("数据源" + "大于");
 
                 for (int position = 1; position < childCount - 1; position++) {
                     int index = childCount - position - 1;
@@ -169,8 +155,6 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
                 }
             }
 
-            System.out.println("childCount" + childCount);
-
             // 回调监听器
             if (mListener != null) {
 
@@ -181,7 +165,6 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
                 }
 
             }
-
         }
     }
 
@@ -194,6 +177,8 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback{
     }
 
     private float getThreshold(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
+        System.out.println("距离 " + recyclerView.getHeight() * getSwipeThreshold(viewHolder));
 
         //若item若是左右滑动,则以宽为基准
         //        return recyclerView.getWidth() * getSwipeThreshold(viewHolder);

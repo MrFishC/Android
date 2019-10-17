@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * @author Jack
  * @time 19-9-23 上午9:51
- * @describe    总体来说，CardLayoutManager 主要就是为 Item View 布局，然后根据 position 做相对应的偏差。
+ * @describe
+ *
+ *      总体来说，CardLayoutManager 主要就是为 Item View 布局，然后根据 position 做相对应的偏差。
  *
  * copy from http://www.sohu.com/a/129609921_608959
  *
@@ -28,8 +30,6 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
     private static final String TAG = "CARD ";
     private RecyclerView mRecyclerView;
     private ItemTouchHelper mItemTouchHelper;
-    private OnLoadMoreListener mOnLoadMoreListener;
-
 
     //实现 generateDefaultLayoutParams() 方法
     @Override
@@ -38,10 +38,9 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
                 ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    public CardLayoutManager(@NonNull RecyclerView recyclerView, @NonNull ItemTouchHelper itemTouchHelper,OnLoadMoreListener onLoadMoreListener) {
+    public CardLayoutManager(@NonNull RecyclerView recyclerView, @NonNull ItemTouchHelper itemTouchHelper) {
         this.mRecyclerView = checkIsNull(recyclerView);
         this.mItemTouchHelper = checkIsNull(itemTouchHelper);
-        this.mOnLoadMoreListener = onLoadMoreListener;
     }
 
     private <T> T checkIsNull(T t) {
@@ -59,7 +58,7 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
 
-        //        super.onLayoutChildren(recycler, state);
+        super.onLayoutChildren(recycler, state);
 
         if (getItemCount() == 0) {//没有Item，界面空着吧
             detachAndScrapAttachedViews(recycler);
@@ -117,7 +116,9 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
                     view.setScaleY(1 - (position - 1) * CardConfig.DEFAULT_SCALE);
                     //                    view.setTranslationY((position - 1) * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);     //从下往上层叠
                     view.setTranslationY(-(position - 1) * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);      //从上往下层叠
-                }else if (position > 0) {
+                }else
+                    if (position > 0) {
+
                     view.setScaleX(1 - position * CardConfig.DEFAULT_SCALE);
                     view.setScaleY(1 - position * CardConfig.DEFAULT_SCALE);
                     //                    view.setTranslationY(position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);    //从下往上层叠
@@ -131,11 +132,6 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
             }
 
         }else {
-
-            if(itemCount == CardConfig.DEFAULT_SHOW_ITEM){
-                System.out.println("数据源触发验证");
-                mOnLoadMoreListener.loadMoreData();
-            }
 
             // 当数据源个数小于或等于最大显示数时，和上面的代码差不多
             for (int position = itemCount - 1; position >= 0; position--) {
@@ -155,11 +151,13 @@ public class CardLayoutManager extends RecyclerView.LayoutManager{
                 if (position > 0) {
                     view.setScaleX(1 - position * CardConfig.DEFAULT_SCALE);
                     view.setScaleY(1 - position * CardConfig.DEFAULT_SCALE);
-                    //                    view.setTranslationY(position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);       //从下往上层叠
+
+                    System.out.println("偏移量 " + view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);
+
+                    //view.setTranslationY(position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);       //从下往上层叠
                     view.setTranslationY(-position * view.getMeasuredHeight() / CardConfig.DEFAULT_TRANSLATE_Y);        //从上往下层叠
                 }else {
                     view.setOnTouchListener(mOnTouchListener);
-                    Log.i(TAG, " : " + SystemClock.currentThreadTimeMillis());
                 }
 
             }

@@ -1,0 +1,15 @@
+apply from: "../common.build.gradle"
+
+android {
+
+    defaultConfig {
+        applicationId "cn.jack.module02_recycleivew"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+dependencies {
+
+}

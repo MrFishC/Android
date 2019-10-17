@@ -1,4 +1,5 @@
-apply from: "../common.build.gradle"
+//apply from: "../common.build.gradle"
+apply from: "/home/pj-jack/jack/Android/AndroidCode/common.build.gradle"
 
 android {
 
@@ -7,3 +8,5 @@ android {
     }
 
 }
+
+

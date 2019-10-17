@@ -1,0 +1,13 @@
+apply from: "../common.build.gradle"
+
+android {
+
+    defaultConfig {
+        applicationId "cn.jack.module02_recycleivew"
+    }
+
+}
+
+dependencies {
+
+}

@@ -1,0 +1,15 @@
+apply from: "../common.build.gradle"
+
+android {
+
+    defaultConfig {
+        applicationId "cn.jack.module05_design_patterns"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+dependencies {
+
+}

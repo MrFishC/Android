@@ -1,0 +1,15 @@
+apply from: "../common.build.gradle"
+
+android {
+
+    defaultConfig {
+        applicationId "cn.jack.module06_handwritten_frame_01_network_engine"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+dependencies {
+
+}
