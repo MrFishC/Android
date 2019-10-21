@@ -1,7 +1,7 @@
-include ':app', ':module05_design_patterns', ':module06_handwritten_frame_01_network_engine', ':module07_mvvm',
+include ':app', ':module05_design_patterns', ':module06_handwritten_frame_01_network_engine', ':module07_mvvm', ':module08_frame01_dragger2',
         ':module01_sqlite',
         ':module02_recycleivew',
         ':module02_02_viewpager',
         ':module03_aac',
-        ':module04_aac_databinding'
+        ':module04_aac_databinding',
 rootProject.name='AndroidCode'

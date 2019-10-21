@@ -31,6 +31,7 @@ public class BaseViewModel<M extends BaseModel> extends ViewModel implements IVi
     protected M mModel;
 
     public BaseViewModel(M model) {
+        mActionLiveData = new MutableLiveData<>();
         this.mModel = model;
     }
 
