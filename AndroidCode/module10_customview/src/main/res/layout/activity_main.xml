@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/timg"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="30dp">
+
+        <cn.jack.module10_customview.CustomLayoutLeft
+            android:id="@+id/layout"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_custom_layout_left"
+            android:layout_height="match_parent"
+            android:gravity="bottom">
+
+            <FrameLayout
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="100dp" />
+
+        </cn.jack.module10_customview.CustomLayoutLeft>
+
+        <cn.jack.module10_customview.CustomLayoutRight
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_custom_layout_right"
+            android:layout_height="match_parent"
+            android:gravity="bottom|right">
+
+            <FrameLayout
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="100dp" />
+
+        </cn.jack.module10_customview.CustomLayoutRight>
+
+    </LinearLayout>
+
+</RelativeLayout>

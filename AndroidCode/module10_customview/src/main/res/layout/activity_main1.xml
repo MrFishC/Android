@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/timg"
+        android:scaleType="centerCrop"/>
+
+    <cn.jack.module10_customview.InnerCircleTransparentView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="30dp"/>
+
+    <!-- 如果在<stroke>标签中设置了android:width，则在<View>标签中android:layout_height的值必须大于android:width的值，否则虚线不会显示。如果不设置，默认android:width为0。 -->
+    <!-- layerType 加上去就有虚线了 具体原因不清楚啊 hahaha -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/shape_dash_line"
+        android:layout_marginBottom="160dp"
+        android:layerType="software"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="75dp"
+        android:layout_marginRight="75dp"/>
+
+</RelativeLayout>

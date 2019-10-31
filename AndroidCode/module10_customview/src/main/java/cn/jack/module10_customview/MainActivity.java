@@ -1,18 +1,16 @@
-package cn.jack;
-
-import android.os.Bundle;
+package cn.jack.module10_customview;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main1);
 
     }
-
-
 }

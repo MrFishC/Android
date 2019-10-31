@@ -1,0 +1,16 @@
+apply from: "../common.build.gradle"
+
+android {
+
+    defaultConfig {
+        applicationId "cn.jack.module08_frame02_okhttp"
+    }
+}
+
+dependencies {
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'         //okhttp3
+}
+
+
