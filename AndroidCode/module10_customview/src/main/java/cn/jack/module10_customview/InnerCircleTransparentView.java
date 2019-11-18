@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
+import cn.jack.module10_customview.R;
+
 /**
  * @author Jack
  * @time 19-10-31 下午4:46
