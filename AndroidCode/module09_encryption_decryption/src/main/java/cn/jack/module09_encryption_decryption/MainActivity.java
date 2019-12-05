@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("==========================================");
 
 
-
                         try {
                             RsaEncrypt.getInstance(new String(Base64.decode(RSA_PUBLIC_KEY,Base64.DEFAULT)));
 

@@ -19,7 +19,11 @@ public class BaseModel implements IModel {
         mCompositeDisposable = new CompositeDisposable();
     }
 
-    public void addSubscribe(Disposable disposable) {
+    /**
+     * 子类根据具体情况调用该方法,防止rxjava导致的内存泄漏问题
+     * @param disposable
+     */
+    protected void addSubscribe(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }

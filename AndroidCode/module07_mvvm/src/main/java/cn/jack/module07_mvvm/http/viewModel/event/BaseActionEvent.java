@@ -13,7 +13,7 @@ import java.util.Map;
  *
  *  + 注意,在设置值的时候,不要相同 +
  */
-public class BaseActionEvent extends BaseEvent {
+public class BaseActionEvent<T> extends BaseEvent {
 
     public static final int FINISH = 1;
 
@@ -36,7 +36,7 @@ public class BaseActionEvent extends BaseEvent {
     /**
      * 其它参数
      */
-    private Map<String, Object> params;
+    private Map<String, T> params;
 
     public BaseActionEvent(int action) {
         super(action);
@@ -50,11 +50,11 @@ public class BaseActionEvent extends BaseEvent {
         this.message = message;
     }
 
-    public Map<String, Object> getParams() {
+    public Map<String, T> getParams() {
         return params;
     }
 
-    public void setParams(Map<String, Object> params) {
+    public void setParams(Map<String, T> params) {
         this.params = params;
     }
 

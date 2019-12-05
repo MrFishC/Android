@@ -35,17 +35,6 @@ public class BaseViewModel<M extends BaseModel> extends ViewModel implements IVi
         this.mModel = model;
     }
 
-    /**
-     * 调用BaseModel中的addSubscribe方法,处理rxjava的内存泄露         xxxRepository实现BaseModel后即可调用addSubscribe方法
-     * @param disposable
-     */
-    protected void addSubscribe(Disposable disposable) {
-        if (mModel == null) {
-            throw new NullPointerException("Create ViewModel with ViewModelFactory with Model");
-        }
-        mModel.addSubscribe(disposable);
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
