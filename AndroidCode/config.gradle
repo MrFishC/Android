@@ -32,6 +32,29 @@ ext {
             "espressocore"                           : "androidx.test.espresso:espresso-core:${version["espressocore"]}",
             "testrunner"                             : "androidx.test:runner:${version["testrunner"]}",
 
+            //glide[图片加载]
+            "glide"                                  : "com.github.bumptech.glide:glide:4.10.0",
+            "glide-compiler"                         : "com.github.bumptech.glide:compiler:4.10.0",
+            "transformations"                        : "jp.wasabeef:glide-transformations:4.1.0",
+
+            //Google AAC (For Lifecycles, LiveData, and ViewModel)
+            "lifecycle-extensions"                   : 'androidx.lifecycle:lifecycle-extensions:2.0.0',
+
+            //rxjava
+            "rxjava2"                               : "io.reactivex.rxjava2:rxjava:2.2.3",
+            "rxandroid2"                            : "io.reactivex.rxjava2:rxandroid:2.1.0",
+
+            //network
+            "retrofit2"                             : "com.squareup.retrofit2:retrofit:2.4.0",
+            "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.4.0",
+            "retrofit2:adapter"                       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
+            "interceptor"                            : "com.squareup.okhttp3:logging-interceptor:3.10.0",
+
+            //json解析
+            "fastjson"                                 : "com.alibaba:fastjson:1.1.71.android",
+
+            //view
+            "constraint"                             : 'androidx.constraintlayout:constraintlayout:1.1.3',
 
     ]
 

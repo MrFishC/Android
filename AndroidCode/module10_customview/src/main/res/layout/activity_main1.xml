@@ -11,7 +11,7 @@
         android:src="@mipmap/timg"
         android:scaleType="centerCrop"/>
 
-    <cn.jack.module10_customview.InnerCircleTransparentView
+    <cn.mrfish.module10_customview.InnerCircleTransparentView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"

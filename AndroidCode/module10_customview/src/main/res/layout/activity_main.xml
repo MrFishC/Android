@@ -17,7 +17,7 @@
         android:orientation="horizontal"
         android:layout_margin="30dp">
 
-        <cn.jack.module10_customview.CustomLayoutLeft
+        <cn.mrfish.module10_customview.CustomLayoutLeft
             android:id="@+id/layout"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -30,9 +30,9 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="100dp" />
 
-        </cn.jack.module10_customview.CustomLayoutLeft>
+        </cn.mrfish.module10_customview.CustomLayoutLeft>
 
-        <cn.jack.module10_customview.CustomLayoutRight
+        <cn.mrfish.module10_customview.CustomLayoutRight
             android:layout_width="0dp"
             android:layout_weight="1"
             android:background="@drawable/shape_custom_layout_right"
@@ -44,7 +44,7 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="100dp" />
 
-        </cn.jack.module10_customview.CustomLayoutRight>
+        </cn.mrfish.module10_customview.CustomLayoutRight>
 
     </LinearLayout>
 
